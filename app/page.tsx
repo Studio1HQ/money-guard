@@ -1,101 +1,187 @@
-import Image from "next/image";
+"use client";
+import React, { useState, useEffect } from "react";
+import { DonutChart } from "@/components/Chart";
+import { Layout } from "@/components/DashboardLayout";
+import { RecentTransactions } from "@/components/features/RecentTransactions";
+import { YourCard } from "@/components/features/YourCards";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  ArrowUp,
+  HousePlus,
+  MessageCircleQuestion,
+  NotebookPen,
+} from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
-export default function Home() {
+const FinancialDashboard = () => {
+  const [loading, setLoading] = useState(false);
+  const [generating, setGenerating] = useState(false);
+  const [activeButton, setActiveButton] = useState<string | null>(null);
+  const [generatedText, setGeneratedText] = useState("");
+  const [fullText, setFullText] = useState("");
+  const [textIndex, setTextIndex] = useState(0);
+
+  const generateResponse = (buttonName: string) => {
+    switch (buttonName) {
+      case "subscriptions":
+        return "Your active subscriptions include Netflix (₹649/month), Spotify (₹119/month), and Amazon Prime (₹1499/year). Your total monthly subscription cost is approximately ₹893.";
+      case "bills":
+        return "Your upcoming bills are: Electricity (₹2,500 due on 30th), Water (₹800 due on 2nd), and Internet (₹999 due on 5th). The total amount due this month is ₹4,299.";
+      case "buyOrRent":
+        return "Based on your current financial situation, renting might be more suitable. Your monthly rent budget of ₹20,000 is manageable, while buying would require a down payment and higher monthly payments. Consider saving for a down payment while renting.";
+      default:
+        return "";
+    }
+  };
+
+  const handleButtonClick = (buttonName: string) => {
+    setLoading(true);
+    setActiveButton(buttonName);
+    setGeneratedText("");
+    setFullText("");
+    setTextIndex(0);
+
+    // Simulate API call or data processing
+    setTimeout(() => {
+      setLoading(false);
+      setGenerating(true);
+      const response = generateResponse(buttonName);
+      setFullText(response);
+      // Start text generation after a short delay
+      setTimeout(() => {
+        setTextIndex(0);
+      }, 500);
+    }, 2000); // 2 seconds delay to simulate loading
+  };
+  useEffect(() => {
+    if (generating && generatedText.length < fullText.length) {
+      const timer = setTimeout(() => {
+        setGeneratedText(fullText.slice(0, generatedText.length + 1));
+      }, 30); // Adjust the speed of text generation here
+
+      return () => clearTimeout(timer);
+    } else if (generating && generatedText.length === fullText.length) {
+      setGenerating(false);
+    }
+  }, [generating, generatedText, fullText, textIndex]);
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+    <Layout>
+      <div className="flex-1 overflow-y-auto p-4 pb-20 lg:pb-4">
+        <div className="bg-white shadow-md p-4 rounded mb-4">
+          <div className="flex flex-col xl:flex-row gap-2 items-center w-full">
+            <Input
+              icon={
+                <div className="bg-orange-500 p-1 rounded-lg cursor-pointer">
+                  <ArrowUp className="h-4 w-4 text-white" />
+                </div>
+              }
+              placeholder="What can we help you with today?.."
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <div className="mx-auto [1100px]:w-2/4 flex justify-end  flex-col md:flex-row gap-2">
+              <Button
+                className={`bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded
+                focus:outline-none focus:ring-2 focus:ring-orange-600 focus:ring-opacity-50
+                ${
+                  activeButton === "subscriptions"
+                    ? "ring-2 ring-orange-600 ring-opacity-50"
+                    : ""
+                }`}
+                onClick={() => handleButtonClick("subscriptions")}
+                disabled={loading || generating}
+              >
+                <NotebookPen className="mr-2 h-4 w-4 " /> List my subscriptions
+              </Button>
+              <Button
+                className={`bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded
+                focus:outline-none focus:ring-2 focus:ring-orange-600 focus:ring-opacity-50
+                ${
+                  activeButton === "bills"
+                    ? "ring-2 ring-orange-600 ring-opacity-50"
+                    : ""
+                }`}
+                onClick={() => handleButtonClick("bills")}
+                disabled={loading || generating}
+              >
+                <MessageCircleQuestion className="mr-2 h-4 w-4" /> More on my
+                bills...
+              </Button>
+              <Button
+                className={`bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded
+                focus:outline-none focus:ring-2 focus:ring-orange-600 focus:ring-opacity-50
+                ${
+                  activeButton === "buyOrRent"
+                    ? "ring-2 ring-orange-600 ring-opacity-50"
+                    : ""
+                }`}
+                onClick={() => handleButtonClick("buyOrRent")}
+                disabled={loading || generating}
+              >
+                <HousePlus className="mr-2 h-4 w-4" /> Should I buy or rent?
+              </Button>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        {(loading || generating || generatedText) && (
+          <div className="bg-white shadow-md p-4 rounded mb-4">
+            <h4 className="text-lg font-semibold mb-2">Generated Response:</h4>
+            {loading && (
+              <div className="flex items-center space-x-4">
+                <Skeleton className="h-4 w-4 rounded-full" />
+                <Skeleton className="h-4 w-[200px]" />
+              </div>
+            )}
+            {(generating || generatedText) && (
+              <p className="text-gray-700">
+                {generatedText}
+                {generating && <span className="animate-pulse">|</span>}
+              </p>
+            )}
+          </div>
+        )}
+
+        {!loading && !generating && (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+              <div className="bg-white p-4 rounded shadow-md">
+                <h4 className="text-sm text-gray-950 mb-2">Total Balance</h4>
+                <p className="text-2xl font-bold">₹ 1,80,000.00</p>
+                <span className="text-green-950 text-sm">↑ 5.60 Saved</span>
+              </div>
+              <div className="bg-white p-4 shadow-md rounded">
+                <h4 className="text-sm text-gray-950 mb-2">Total Income</h4>
+                <p className="text-2xl font-bold">₹ 3,50,000.00</p>
+                <span className="text-green-950 text-sm">↑ 3.80%</span>
+              </div>
+              <div className="bg-white p-4 rounded shadow-md border">
+                <h4 className="text-sm text-gray-950 mb-2">Total Expense</h4>
+                <p className="text-2xl font-bold">₹ 83,000.00</p>
+                <span className="text-red-950 text-sm">↓ 4.62%</span>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+              <div className="bg-white shadow-md p-4 rounded">
+                <h4 className="text-lg font-semibold mb-4">
+                  Your Spending Summary
+                </h4>
+                <DonutChart />
+                <div className="flex justify-center mt-4 space-x-4">
+                  <span className="text-sm">Subscriptions</span>
+                  <span className="text-sm">Money Transfer</span>
+                  <span className="text-sm">Bill Payments</span>
+                  <span className="text-sm">Food Payment</span>
+                </div>
+              </div>
+              <YourCard />
+            </div>
+            <RecentTransactions />
+          </>
+        )}
+      </div>
+    </Layout>
   );
-}
+};
+
+export default FinancialDashboard;
