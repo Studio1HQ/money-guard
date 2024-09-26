@@ -13,6 +13,7 @@ export const Sidebar = () => {
           width={100}
           src="https://i.pravatar.cc/150?img=64"
           alt="User"
+          priority={true}
           className="rounded-full mb-2 w-20 h-20"
         />
         <p className="text-sm text-gray-950">Welcome back!</p>
