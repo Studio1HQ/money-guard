@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-type ButtonName = "subscriptions" | "bills" | "buyOrRent";
+export type ButtonName = "subscriptions" | "bills" | "buyOrRent";
 
 type SubscriptionItem = { name: string; cost: string };
 
