@@ -4,10 +4,10 @@ import { DonutChart } from "@/components/Chart";
 import { RecentTransactions } from "@/components/features/RecentTransactions";
 import { YourCard } from "@/components/features/YourCards";
 
-import { FinancialSummary } from "@/components/features/FinancialSummary";
 import { ResponseDisplay } from "@/components/features/QueryDisplay";
 
 import FormSection from "@/components/features/FormSection";
+import FinancialSummary from "@/components/features/FinancialSummary";
 
 const FinancialDashboard = async () => {
   return (

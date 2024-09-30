@@ -5,7 +5,7 @@ import {
   FinancialState,
   FinancialTotals,
 } from "@/types/financialTypes";
-import { fetchFinancialData } from "@/app/api/nebius/financialApi";
+
 import { parseResponse } from "@/utils/financialUtils";
 
 import {
@@ -14,6 +14,7 @@ import {
   getSubscriptions,
   getTransactions,
 } from "@/lib/mockData";
+import { fetchFinancialData } from "@/lib/financialApi";
 
 export const useFinancialStore = create<FinancialState & FinancialTotals>(
   (set, get) => ({
@@ -56,6 +57,8 @@ export const useFinancialStore = create<FinancialState & FinancialTotals>(
       const incomeChangePercentage = 3.8;
       const expenseChangePercentage = -1.8;
 
+      console.log("Calculated totals:", { balance, income, expense });
+
       set({
         balance,
         income,
@@ -67,6 +70,7 @@ export const useFinancialStore = create<FinancialState & FinancialTotals>(
     },
     fetchTransactions: () => {
       const transactions = getTransactions();
+      console.log("Fetched transactions:", transactions);
       set({ transactions }, false);
       get().calculateTotals();
     },
