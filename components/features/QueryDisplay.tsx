@@ -11,7 +11,7 @@ export const ResponseDisplay: React.FC = () => {
   if (!loading && !parsedResponse) return null;
 
   return (
-    <Card className="w-full max-w-3xl mx-auto">
+    <Card className="w-full ">
       <CardHeader>
         <CardTitle>{loading ? "Loading..." : "Financial Analysis"}</CardTitle>
       </CardHeader>

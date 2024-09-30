@@ -22,12 +22,12 @@ export const QueryInput: React.FC = () => {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="What can we help you with today?.."
-        className="pr-12"
+        className="pr-12 w-full"
         disabled={loading}
       />
       <button
         type="submit"
-        className={`absolute right-2 top-1/2 -translate-y-1/2 bg-orange-500 p-1 rounded-lg transition-colors ${
+        className={`absolute right-2 top-1/2 -translate-y-1/2 bg-orange-500 p-1 rounded-lg  transition-colors ${
           query.trim() ? "hover:bg-orange-600" : "opacity-50 cursor-not-allowed"
         }`}
         disabled={!query.trim() || loading}

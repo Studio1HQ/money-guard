@@ -4,7 +4,7 @@ import { create } from "zustand";
 export type ButtonName = "subscriptions" | "bills" | "buyOrRent" | "userInput";
 
 type ResponseData = {
-  markdownText: string; // Store the raw markdown text only
+  markdownText: string;
 };
 
 interface FinancialState {
@@ -41,8 +41,6 @@ const generatePrompt = (buttonName: ButtonName, userInput?: string): string => {
 // Simplified: Parse the raw markdown text from the response
 const parseResponse = (responseText: string): ResponseData => {
   console.log("Parsing markdown response:", responseText);
-
-  // We directly store the markdownText instead of parsing it as JSON
   return {
     markdownText: responseText,
   };
