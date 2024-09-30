@@ -15,7 +15,7 @@ interface BaseMessage {
 
 interface FunctionMessage extends BaseMessage {
   role: "function";
-  name: string; // required for function role
+  name: string;
 }
 
 type Message = BaseMessage | FunctionMessage;
