@@ -1,4 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  getSubscriptions,
+  getTransactions,
+  Transaction,
+} from "@/lib/mockTransaction";
 import { create } from "zustand";
 
 export type ButtonName = "subscriptions" | "bills" | "buyOrRent" | "userInput";
@@ -14,6 +19,8 @@ interface FinancialState {
   parsedResponse: ResponseData | null;
   displayText: string;
   textIndex: number;
+  transactions: Transaction[];
+  subscriptions: Transaction[];
   setLoading: (loading: boolean) => void;
   setGenerating: (generating: boolean) => void;
   setActiveButton: (activeButton: ButtonName | null) => void;
@@ -21,16 +28,18 @@ interface FinancialState {
   setDisplayText: (displayText: string) => void;
   setTextIndex: (textIndex: number) => void;
   handleButtonClick: (buttonName: ButtonName, userInput?: string) => void;
+  fetchTransactions: () => void;
+  fetchSubscriptions: () => void;
 }
 
 const generatePrompt = (buttonName: ButtonName, userInput?: string): string => {
   switch (buttonName) {
     case "subscriptions":
-      return "Generate a list of active subscriptions with their costs and a summary of total monthly cost";
+      return "Generate a list of active subscriptions with their costs and a summary of total monthly cost based on the provided transaction data.";
     case "bills":
-      return "Generate a list of upcoming bills with their amounts and due dates, and a summary of total amount due";
+      return "Generate a list of upcoming bills with their amounts and due dates, and a summary of total amount due based on the provided transaction data.";
     case "buyOrRent":
-      return "Provide an analysis on whether to buy or rent a home";
+      return "Provide an analysis on whether to buy or rent a home, considering the user's current financial situation based on their transaction history.";
     case "userInput":
       return userInput || "";
     default:
@@ -53,12 +62,22 @@ export const useFinancialStore = create<FinancialState>((set) => ({
   parsedResponse: null,
   displayText: "",
   textIndex: 0,
+  transactions: [],
+  subscriptions: [],
   setLoading: (loading) => set({ loading }),
   setGenerating: (generating) => set({ generating }),
   setActiveButton: (activeButton) => set({ activeButton }),
   setParsedResponse: (parsedResponse) => set({ parsedResponse }),
   setDisplayText: (displayText) => set({ displayText }),
   setTextIndex: (textIndex) => set({ textIndex }),
+  fetchTransactions: () => {
+    const transactions = getTransactions();
+    set({ transactions });
+  },
+  fetchSubscriptions: () => {
+    const subscriptions = getSubscriptions();
+    set({ subscriptions });
+  },
   handleButtonClick: async (buttonName, userInput) => {
     set({
       loading: true,
@@ -71,6 +90,9 @@ export const useFinancialStore = create<FinancialState>((set) => ({
 
     try {
       const prompt = generatePrompt(buttonName, userInput);
+      const transactions = getTransactions();
+      const subscriptions = getSubscriptions();
+
       const response = await fetch("/api/nebius", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -79,9 +101,15 @@ export const useFinancialStore = create<FinancialState>((set) => ({
             {
               role: "system",
               content:
-                "You are a financial assistant. Respond in markdown format.",
+                "You are a financial assistant. Respond in markdown format. Use the provided transaction data to inform your responses.",
             },
-            { role: "user", content: prompt },
+            {
+              role: "user",
+              content: `Here is the user's transaction data:\n${JSON.stringify({
+                transactions,
+                subscriptions,
+              })}\n\n${prompt}`,
+            },
           ],
           max_tokens: 500,
           temperature: 0.7,
