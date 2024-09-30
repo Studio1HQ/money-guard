@@ -13,7 +13,7 @@ export const ResponseDisplay: React.FC = () => {
   return (
     <Card className="w-full ">
       <CardHeader>
-        <CardTitle>{loading ? "Loading..." : "Financial Analysis"}</CardTitle>
+        <CardTitle>{loading ? "Loading..." : "Response"}</CardTitle>
       </CardHeader>
       <CardContent>
         {loading ? (
