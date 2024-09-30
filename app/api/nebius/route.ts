@@ -27,6 +27,8 @@ export async function POST(request: NextRequest) {
     temperature?: number;
   } = await request.json();
 
+  console.log("Received request body:", JSON.stringify(body, null, 2));
+
   try {
     // Map your Message type to the ChatCompletionMessageParam type
     const formattedMessages = body.messages.map((msg) => {
@@ -45,16 +47,32 @@ export async function POST(request: NextRequest) {
       };
     });
 
+    console.log(
+      "Formatted messages:",
+      JSON.stringify(formattedMessages, null, 2)
+    );
+
     const completion = await client.chat.completions.create({
       model: "meta-llama/Meta-Llama-3.1-70B-Instruct",
       messages: formattedMessages, // Pass formatted messages
-      max_tokens: body.max_tokens || 100,
+      max_tokens: body.max_tokens || 500, // Increased from 100 to 500
       temperature: body.temperature || 0.7,
     });
+
+    console.log(
+      "Nebius AI response:",
+      JSON.stringify(completion.choices[0].message, null, 2)
+    );
 
     return NextResponse.json(completion.choices[0].message);
   } catch (error) {
     console.error("Error:", error);
-    return NextResponse.json({ error: "An error occurred" }, { status: 500 });
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    return NextResponse.json(
+      { error: "An unknown error occurred" },
+      { status: 500 }
+    );
   }
 }

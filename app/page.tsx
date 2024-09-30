@@ -8,20 +8,7 @@ import { FinancialSummary } from "@/components/features/FinancialSummary";
 import { ResponseDisplay } from "@/components/features/QueryDisplay";
 import { QueryInput } from "@/components/features/QueryInput";
 
-async function getSubscriptions() {
-  const res = await fetch("http://localhost:3000/api/subscriptions", {
-    cache: "no-store",
-  });
-  if (!res.ok) {
-    throw new Error("Failed to fetch subscriptions");
-  }
-  console.log(res);
-  return res.json();
-}
-
 const FinancialDashboard = async () => {
-  const { subscriptions } = await getSubscriptions();
-
   return (
     <Layout>
       <div className="flex-1 overflow-y-auto p-4 pb-20 lg:pb-4">
@@ -31,15 +18,8 @@ const FinancialDashboard = async () => {
             <ActionButtons />
           </div>
         </div>
-        <div>
-          <h1>Server-side Fetched Data</h1>
-          <pre>{JSON.stringify(subscriptions, null, 2)}</pre>
-        </div>
-
         <ResponseDisplay />
-
         <FinancialSummary />
-
         <div className="mb-4">
           <DonutChart />
         </div>

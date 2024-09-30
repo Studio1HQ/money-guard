@@ -1,54 +1,33 @@
-// components/ResponseDisplay.tsx
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useFinancialStore } from "@/store/useFinancialStore";
+import { useFinancialStore } from "@/store/useNebius";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import DynamicFinancialDisplay from "./DynamicFinancialDisplay";
 
 export const ResponseDisplay: React.FC = () => {
-  const {
-    loading,
-    generating,
-    parsedResponse,
-    displayText,
-    textIndex,
-    setTextIndex,
-    setGenerating,
-  } = useFinancialStore();
+  const { loading, parsedResponse } = useFinancialStore();
 
-  useEffect(() => {
-    if (generating && textIndex < displayText.length) {
-      const timer = setTimeout(() => {
-        setTextIndex(textIndex + 1);
-      }, 30);
-
-      return () => clearTimeout(timer);
-    } else if (generating && textIndex === displayText.length) {
-      setGenerating(false);
-    }
-  }, [generating, textIndex, displayText, setTextIndex, setGenerating]);
-
-  const renderContent = (content: string) => {
-    return generating ? content.slice(0, textIndex) + "|" : content;
-  };
-
-  if (!loading && !generating && !parsedResponse) return null;
+  if (!loading && !parsedResponse) return null;
 
   return (
-    <div className="bg-white shadow-md p-4 rounded mb-4">
-      <h4 className="text-lg font-semibold mb-2">
-        {loading ? "Generating..." : "Generated Response"}
-      </h4>
-      {loading && (
-        <div className="flex items-center space-x-4">
-          <Skeleton className="h-4 w-4 rounded-full" />
-          <Skeleton className="h-4 w-[200px]" />
-        </div>
-      )}
-      {parsedResponse && (
-        <pre className="whitespace-pre-wrap text-lg">
-          {renderContent(displayText)}
-        </pre>
-      )}
-    </div>
+    <Card className="w-full max-w-3xl mx-auto">
+      <CardHeader>
+        <CardTitle>{loading ? "Loading..." : "Financial Analysis"}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        {loading ? (
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-3/4" />
+          </div>
+        ) : (
+          <DynamicFinancialDisplay data={parsedResponse} />
+        )}
+      </CardContent>
+    </Card>
   );
 };
+
+export default ResponseDisplay;

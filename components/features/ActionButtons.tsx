@@ -2,7 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { NotebookPen, MessageCircleQuestion, HousePlus } from "lucide-react";
-import { ButtonName, useFinancialStore } from "@/store/useFinancialStore";
+import { ButtonName, useFinancialStore } from "@/store/useNebius";
 
 export const ActionButtons: React.FC = () => {
   const { handleButtonClick, activeButton, loading, generating } =
