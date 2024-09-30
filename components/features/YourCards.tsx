@@ -1,18 +1,26 @@
+"use client";
+import { useFinancialStore } from "@/store/useNebius";
+import { useEffect } from "react";
+
 export const YourCard = () => {
+  const { cards, fetchCards } = useFinancialStore();
+
+  useEffect(() => {
+    fetchCards();
+  }, [fetchCards]);
+
+  console.log("fetchedCards", cards);
   return (
     <div className="bg-white shadow-md p-4 rounded">
       <h4 className="text-lg font-semibold mb-4">Your Cards</h4>
       <div className="space-y-4">
-        <div className="bg-gray-100 p-4 rounded">
-          <p className="text-sm mb-1">12XX XXXX XXXX XX66</p>
-          <p className="text-sm">Adam Jacobs</p>
-          <p className="text-sm text-gray-950">04/28</p>
-        </div>
-        <div className="bg-gray-100 p-4 rounded">
-          <p className="text-sm mb-1">91XX XXXX XXXX XX46</p>
-          <p className="text-sm">Adam Jacobs</p>
-          <p className="text-sm text-gray-950">04/28</p>
-        </div>
+        {cards.map(({ number, name, expiryDate, id }) => (
+          <div className="bg-gray-100 p-4 rounded" key={id}>
+            <p className="text-sm mb-1">{number}</p>
+            <p className="text-sm">{name}</p>
+            <p className="text-sm text-gray-950">{expiryDate}</p>
+          </div>
+        ))}
       </div>
     </div>
   );

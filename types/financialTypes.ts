@@ -36,5 +36,6 @@ export interface FinancialState {
   handleButtonClick: (buttonName: ButtonName, userInput?: string) => void;
   fetchTransactions: () => void;
   fetchSubscriptions: () => void;
+  fetchCards: () => void;
   calculateTotals: () => void;
 }
