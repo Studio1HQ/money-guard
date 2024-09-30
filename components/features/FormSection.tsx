@@ -4,6 +4,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Loader2Icon } from "lucide-react";
 import { useFinancialStore } from "@/store/useNebius";
+import { ActionButtons } from "./ActionButtons";
 
 function FormSection() {
   const [query, setQuery] = useState("");
@@ -19,8 +20,8 @@ function FormSection() {
   };
 
   return (
-    <div className="p-5">
-      <form className="mt-6" onSubmit={onSubmit}>
+    <div className="p-5 flex flex-col gap-2 md:flex-row justify-between">
+      <form className="mt-6  w-full md:w-3/4" onSubmit={onSubmit}>
         <div className="my-2 flex flex-col gap-2 mb-7">
           <Textarea
             value={query}
@@ -41,6 +42,7 @@ function FormSection() {
           Generate
         </Button>
       </form>
+      <ActionButtons />
     </div>
   );
 }
