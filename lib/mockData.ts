@@ -1,5 +1,3 @@
-// lib/mockData.ts
-
 export interface Transaction {
   id: string;
   name: string;
@@ -7,6 +5,7 @@ export interface Transaction {
   date: string;
   amount: number;
   isSubscription: boolean;
+  type: "income" | "expense";
 }
 
 export interface Card {
@@ -19,21 +18,31 @@ export interface Card {
 export const mockTransactions: Transaction[] = [
   {
     id: "1",
-    name: "Figma(Subscription)",
-    mode: "Credit Card",
-    date: "26-06-2022",
-    amount: -1850,
-    isSubscription: true,
+    name: "Salary",
+    mode: "Bank Transfer",
+    date: "01-09-2024",
+    amount: 350000,
+    isSubscription: false,
+    type: "income",
   },
   {
     id: "2",
-    name: "John Doe",
-    mode: "Debit Card",
-    date: "20-06-2022",
-    amount: 15000,
-    isSubscription: false,
+    name: "Rent",
+    mode: "Bank Transfer",
+    date: "05-09-2024",
+    amount: -30000,
+    isSubscription: true,
+    type: "expense",
   },
-  // Add more transactions as needed
+  {
+    id: "3",
+    name: "Groceries",
+    mode: "Credit Card",
+    date: "10-09-2024",
+    amount: -5000,
+    isSubscription: false,
+    type: "expense",
+  },
 ];
 
 export const mockCards: Card[] = [

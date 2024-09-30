@@ -4,6 +4,15 @@ import { Card, Transaction } from "@/lib/mockData";
 
 export type ButtonName = "subscriptions" | "bills" | "buyOrRent" | "userInput";
 
+export interface FinancialTotals {
+  balance: number;
+  income: number;
+  expense: number;
+  savedPercentage: number;
+  incomeChangePercentage: number;
+  expenseChangePercentage: number;
+}
+
 export type ResponseData = {
   markdownText: string;
 };
@@ -27,4 +36,5 @@ export interface FinancialState {
   handleButtonClick: (buttonName: ButtonName, userInput?: string) => void;
   fetchTransactions: () => void;
   fetchSubscriptions: () => void;
+  calculateTotals: () => void;
 }

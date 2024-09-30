@@ -1,6 +1,4 @@
-// utils/financialUtils.ts
-
-import { ButtonName, ResponseData } from "../types/financialTypes";
+import { ButtonName, ResponseData } from "@/types/financialTypes";
 
 export const generatePrompt = (
   buttonName: ButtonName,
