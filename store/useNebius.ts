@@ -57,8 +57,6 @@ export const useFinancialStore = create<FinancialState & FinancialTotals>(
       const incomeChangePercentage = 3.8;
       const expenseChangePercentage = -1.8;
 
-      console.log("Calculated totals:", { balance, income, expense });
-
       set({
         balance,
         income,
@@ -70,7 +68,6 @@ export const useFinancialStore = create<FinancialState & FinancialTotals>(
     },
     fetchTransactions: () => {
       const transactions = getTransactions();
-      console.log("Fetched transactions:", transactions);
       set({ transactions }, false);
       get().calculateTotals();
     },
@@ -103,9 +100,6 @@ export const useFinancialStore = create<FinancialState & FinancialTotals>(
           subscriptions,
           cards
         );
-
-        console.log("API response data:", data);
-
         const parsedResponse = parseResponse(data.content);
         const displayText = parsedResponse.markdownText;
 

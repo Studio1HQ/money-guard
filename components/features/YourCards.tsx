@@ -9,7 +9,6 @@ export const YourCard = () => {
     fetchCards();
   }, [fetchCards]);
 
-  console.log("fetchedCards", cards);
   return (
     <div className="bg-white shadow-md p-4 w-full rounded">
       <h4 className="text-lg font-semibold mb-4">Your Cards</h4>

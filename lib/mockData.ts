@@ -56,7 +56,7 @@ export const mockCards: Card[] = [
     id: "2",
     number: "91XX XXXX XXXX XX46",
     name: "Adam Jacobs",
-    expiryDate: "04/28",
+    expiryDate: "04/30",
   },
 ];
 

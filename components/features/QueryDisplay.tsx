@@ -7,9 +7,6 @@ import DynamicFinancialDisplay from "./DynamicFinancialDisplay";
 
 export const ResponseDisplay: React.FC = () => {
   const { loading, parsedResponse } = useFinancialStore();
-
-  console.log(parsedResponse);
-
   if (!loading && !parsedResponse) return null;
 
   return (
