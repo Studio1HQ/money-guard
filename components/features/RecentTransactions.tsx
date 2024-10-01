@@ -1,4 +1,14 @@
+"use client";
+import { useFinancialStore } from "@/store/useNebius";
+import { useEffect } from "react";
+
 export const RecentTransactions = () => {
+  const { fetchTransactions, transactions } = useFinancialStore();
+  console.log(transactions);
+  useEffect(() => {
+    fetchTransactions();
+  }, [fetchTransactions, transactions]);
+
   return (
     <div className="bg-white shadow-md p-4 w-full rounded">
       <h4 className="text-lg font-semibold mb-4">Recent Transactions</h4>
