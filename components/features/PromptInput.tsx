@@ -22,13 +22,13 @@ const MoneyGuardAssistant = () => {
   };
 
   return (
-    <div className="flex w-full flex-col gap-2">
-      <div className="bg-orange-100 border-orange-300 py-4 dark:border-orange-700 dark:bg-orange-900 rounded-md border">
-        <ul className="text-orange-800 dark:text-orange-200 text-sm">
+    <div className="flex w-full mb-4 flex-col gap-2">
+      <div className="bg-white border-gray-300 py-4 dark:border-orange-700 dark:bg-orange-900 rounded-md border">
+        <ul className="text-orange-500 dark:text-orange-200 text-sm">
           {moneyguardPrompts.map(({ name, prompt }, index) => (
             <li
               key={index}
-              className="cursor-pointer px-4 py-1 hover:bg-orange-200 dark:hover:bg-orange-800"
+              className="cursor-pointer px-4 py-1 hover:bg-orange-100 dark:hover:bg-orange-800"
             >
               <button
                 className="text-left w-full"
