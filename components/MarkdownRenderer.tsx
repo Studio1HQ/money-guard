@@ -32,22 +32,25 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
           table: ({ ...props }) => (
             <div className="overflow-x-auto my-4">
               <table
-                className="min-w-full table-auto border-collapse"
+                className="min-w-full table-auto border-collapse border border-gray-300"
                 {...props}
               />
             </div>
           ),
-          thead: ({ ...props }) => <thead className="bg-gray-50" {...props} />,
+          thead: ({ ...props }) => <thead className="bg-gray-100" {...props} />,
           th: ({ ...props }) => (
             <th
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider border border-gray-300"
               {...props}
             />
           ),
           td: ({ ...props }) => (
-            <td className="px-6 py-4 whitespace-nowrap" {...props} />
+            <td
+              className="px-6 py-4 whitespace-nowrap border border-gray-300"
+              {...props}
+            />
           ),
-          tr: ({ ...props }) => <tr className="border-b" {...props} />,
+          tr: ({ ...props }) => <tr className="even:bg-gray-50" {...props} />,
           strong: ({ ...props }) => <strong className="font-bold" {...props} />,
           em: ({ ...props }) => <em className="italic" {...props} />,
           blockquote: ({ ...props }) => (
