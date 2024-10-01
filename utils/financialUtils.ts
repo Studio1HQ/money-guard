@@ -19,7 +19,7 @@ export const generatePrompt = (
 };
 
 export const parseResponse = (responseText: string): ResponseData => {
-  console.log("Parsing markdown response:", responseText);
+  console.log(responseText);
   return {
     markdownText: responseText,
   };
