@@ -2,7 +2,7 @@
 
 ## Overview
 
-The **Financial Dashboard Application** is a React-based web application designed to help users manage and visualize their financial data. Utilizing **Zustand** for state management and **TypeScript** for type safety, this application provides a seamless experience for tracking transactions, subscriptions, and financial summaries. Whether you're looking to monitor your income and expenses or manage your financial assets, this dashboard offers the tools you need to stay informed and in control.
+The **Financial Dashboard Application** is a Next js Fullstack web application designed to help users manage and visualize their financial data and integrated with nebius ai. Utilizing **Zustand** for state management and **TypeScript** for type safety, this application provides a seamless experience for tracking transactions, subscriptions, and financial summaries. Whether you're looking to monitor your income and expenses or manage your financial assets, this dashboard offers the tools you need to stay informed and in control.
 
 ## Features
 
