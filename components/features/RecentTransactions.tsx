@@ -1,13 +1,35 @@
 "use client";
+import React from "react";
 import { useFinancialStore } from "@/store/useNebius";
 import { useEffect } from "react";
 
 export const RecentTransactions = () => {
   const { fetchTransactions, transactions } = useFinancialStore();
-  console.log(transactions);
+
   useEffect(() => {
     fetchTransactions();
-  }, [fetchTransactions, transactions]);
+  }, [fetchTransactions]);
+
+  const formatAmount = (amount: number) => {
+    const absAmount = Math.abs(amount);
+    const formattedAmount = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 0,
+    }).format(absAmount);
+    return amount < 0 ? `-${formattedAmount}` : `+${formattedAmount}`;
+  };
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date
+      .toLocaleDateString("en-US", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      })
+      .replace(/\//g, "-");
+  };
 
   return (
     <div className="bg-white shadow-md p-4 w-full rounded">
@@ -23,18 +45,20 @@ export const RecentTransactions = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="py-2">Figma(Subscription)</td>
-              <td>Credit Card</td>
-              <td>26-06-2022</td>
-              <td className="text-right text-red-950">-1850 ₹</td>
-            </tr>
-            <tr>
-              <td className="py-2">John Doe</td>
-              <td>Debit Card</td>
-              <td>20-06-2022</td>
-              <td className="text-right text-green-950">+15000 ₹</td>
-            </tr>
+            {transactions.map((transaction) => (
+              <tr key={transaction.id}>
+                <td className="py-2">{transaction.name}</td>
+                <td>{transaction.mode}</td>
+                <td>{formatDate(transaction.date)}</td>
+                <td
+                  className={`text-right ${
+                    transaction.amount < 0 ? "text-red-800" : "text-green-800"
+                  }`}
+                >
+                  {formatAmount(transaction.amount)}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
