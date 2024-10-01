@@ -1,8 +1,7 @@
 // components/Sidebar.tsx
-import { Home, PieChart, CreditCard, List, LogOut } from "lucide-react";
+import { Home, PieChart, CreditCard, List } from "lucide-react";
 import Image from "next/image";
 import { NavItem } from "./NavItem";
-import { Button } from "./ui/button";
 
 export const Sidebar = () => {
   return (
