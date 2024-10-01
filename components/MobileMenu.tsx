@@ -18,10 +18,10 @@ export const MobileMenuToggle = () => {
 
       {/* Mobile Bottom Nav */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white z-20 flex justify-around items-center h-16">
-        <NavItem icon={Home} label="Home" />
-        <NavItem icon={PieChart} label="Invest" />
-        <NavItem icon={CreditCard} label="Cards" />
-        <NavItem icon={List} label="Trans." />
+        <NavItem icon={Home} label="Home" href="/" />
+        <NavItem icon={PieChart} label="Invest" href="/" />
+        <NavItem icon={CreditCard} label="Cards" href="/" />
+        <NavItem icon={List} label="Trans." href="/" />
       </div>
     </>
   );

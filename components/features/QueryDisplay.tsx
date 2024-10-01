@@ -3,7 +3,7 @@ import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useFinancialStore } from "@/store/useNebius";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MarkdownRenderer } from "../MarkdownRenderer";
+import { MarkdownRenderer } from "./MarkdownRenderer";
 
 interface MarkdownResponse {
   markdownText: string;

@@ -11,7 +11,7 @@ export const Sidebar = () => {
           height={100}
           width={100}
           src="https://i.pravatar.cc/150?img=64"
-          alt="User"
+          alt="UsMober"
           priority={true}
           className="rounded-full mb-2 w-20 h-20"
         />
