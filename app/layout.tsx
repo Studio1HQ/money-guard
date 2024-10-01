@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { MobileMenuToggle } from "@/components/MobileMenu";
+import { Sidebar } from "@/components/SideBar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,7 +30,19 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <div className="flex flex-col h-screen bg-gray-100 text-black">
+          {/* Top bar for mobile */}
+          <MobileMenuToggle />
+
+          <div className="flex flex-1 overflow-hidden">
+            <Sidebar />
+
+            {/* Main Content */}
+            <div className="flex-1 overflow-y-auto p-4 pb-20 lg:pb-4">
+              {children}
+            </div>
+          </div>
+        </div>
       </body>
     </html>
   );
