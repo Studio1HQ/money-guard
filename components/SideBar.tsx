@@ -20,10 +20,10 @@ export const Sidebar = () => {
         <h3 className="text-lg font-semibold">Adam Jacobs</h3>
       </div>
       <nav className="flex-1 space-y-2">
-        <NavItem icon={Home} label="Dashboard" />
-        <NavItem icon={PieChart} label="Investments" />
-        <NavItem icon={CreditCard} label="My Cards" />
-        <NavItem icon={List} label="Transactions" />
+        <NavItem icon={Home} label="Dashboard" href="/" />
+        <NavItem icon={PieChart} label="Investments" href="/" />
+        <NavItem icon={CreditCard} label="My Cards" href="/" />
+        <NavItem icon={List} label="Transactions" href="/" />
       </nav>
       <Button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">
         <LogOut className="mr-2 h-4 w-4 " /> Logout
