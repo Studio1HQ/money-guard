@@ -18,11 +18,13 @@ const FinancialDashboard = async () => {
           <ResponseDisplay />
         </div>
         <FinancialSummary />
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <DonutChart />
+        </div> */}
+        <div className="flex flex-col lg:flex-row w-full justify-between gap-3">
+          <RecentTransactions />
+          <YourCard />
         </div>
-        <RecentTransactions />
-        <YourCard />
       </div>
     </Layout>
   );

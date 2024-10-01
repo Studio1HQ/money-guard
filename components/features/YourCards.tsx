@@ -11,7 +11,7 @@ export const YourCard = () => {
 
   console.log("fetchedCards", cards);
   return (
-    <div className="bg-white shadow-md p-4 rounded">
+    <div className="bg-white shadow-md p-4 w-full rounded">
       <h4 className="text-lg font-semibold mb-4">Your Cards</h4>
       <div className="space-y-4">
         {cards.map(({ number, name, expiryDate, id }) => (

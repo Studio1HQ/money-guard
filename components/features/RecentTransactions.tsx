@@ -1,6 +1,6 @@
 export const RecentTransactions = () => {
   return (
-    <div className="bg-white shadow-md p-4 rounded">
+    <div className="bg-white shadow-md p-4 w-full rounded">
       <h4 className="text-lg font-semibold mb-4">Recent Transactions</h4>
       <div className="overflow-x-auto">
         <table className="w-full">
