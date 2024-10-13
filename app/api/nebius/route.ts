@@ -30,10 +30,8 @@ export async function POST(request: NextRequest) {
   console.log("Received request body:", JSON.stringify(body, null, 2));
 
   try {
-    // Map your Message type to the ChatCompletionMessageParam type
     const formattedMessages = body.messages.map((msg) => {
       if (msg.role === "function") {
-        // Cast to FunctionMessage and ensure 'name' is included
         return {
           role: msg.role,
           content: msg.content,
@@ -54,8 +52,8 @@ export async function POST(request: NextRequest) {
 
     const completion = await client.chat.completions.create({
       model: "meta-llama/Meta-Llama-3.1-70B-Instruct",
-      messages: formattedMessages, // Pass formatted messages
-      max_tokens: body.max_tokens || 500, // Increased from 100 to 500
+      messages: formattedMessages,
+      max_tokens: body.max_tokens || 500,
       temperature: body.temperature || 0.7,
     });
 

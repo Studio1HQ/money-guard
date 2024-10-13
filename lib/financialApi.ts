@@ -19,7 +19,7 @@ export const fetchFinancialData = async (
         {
           role: "system",
           content:
-            "You are a financial assistant. Respond in markdown format. Use the provided transaction data to inform your responses.",
+            "You are a financial assistant. Respond in markdown format and us dollars. Use the provided transaction data to inform your responses.",
         },
         {
           role: "user",

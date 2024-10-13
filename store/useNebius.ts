@@ -50,9 +50,6 @@ export const useFinancialStore = create<FinancialState & FinancialTotals>(
           .reduce((sum, t) => sum + t.amount, 0)
       );
       const balance = income - expense;
-
-      // These percentages should ideally be calculated by comparing with previous period data
-      // For now, we'll use mock values
       const savedPercentage = 5.6;
       const incomeChangePercentage = 3.8;
       const expenseChangePercentage = -1.8;
